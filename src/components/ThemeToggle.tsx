@@ -9,7 +9,7 @@ export function ThemeToggle({ position }: { position: "absolute" | "relative" })
     <Button
       variant="ghost"
       size="icon"
-      className={`${position === "absolute" ? "top-4 right-4 z-50 absolute" : "relative"} cursor-pointer`}
+      className={`${position === "absolute" ? "top-4 right-4 z-50 absolute" : "relative"} cursor-pointer hover:text-primary text-primary/70 hover:bg-primary/10`}
       onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
       aria-label="Toggle theme"
     >
