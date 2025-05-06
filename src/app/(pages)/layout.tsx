@@ -1,8 +1,7 @@
-import Footer from "@/components/landing/Footer";
-import Appbar from "@/components/landing/Navbar";
+import AppSidebar from "@/components/layouts/AppSidebar";
 import { UserProvider } from "@/context/UserContext";
-import prisma from "@/db/prisma";
 import { auth } from "@/lib/auth";
+import prisma from "@/lib/prismaConfig";
 import { ReactNode } from "react";
 
 interface PagesLayoutProps {
@@ -26,11 +25,12 @@ export default async function PagesLayout({ children }: PagesLayoutProps) {
 
   return (
     <UserProvider initialUser={user}>
-        <Appbar />
-        <main className="min-h-screen">
+      <div className="flex min-h-screen bg-background">
+        <AppSidebar />
+        <main className="flex-1 md:ml-16 lg:ml-64 pt-4 pb-20 md:pb-4 px-4">
           {children}
         </main>
-        <Footer />
+      </div>
     </UserProvider>
   );
 }

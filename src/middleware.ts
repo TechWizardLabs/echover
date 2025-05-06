@@ -5,16 +5,22 @@ import { NextResponse } from "next/server";
 export async function middleware(request: NextRequest) {
   const session = await auth();
   const isLoggedIn = !!session;
+  const { pathname } = request.nextUrl;
 
-  const isAuthPage = request.nextUrl.pathname.startsWith("/signin");
+  const publicRoutes = ["/signin"];
+  const isPublicRoute = publicRoutes.includes(pathname);
 
-  if (isAuthPage && isLoggedIn) {
+  if (isPublicRoute && isLoggedIn) {
     return NextResponse.redirect(new URL("/", request.url));
+  }
+
+  if (!isPublicRoute && !isLoggedIn) {
+    return NextResponse.redirect(new URL("/signin", request.url));
   }
 
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/signin", "/"],
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|signin).*)"],
 };

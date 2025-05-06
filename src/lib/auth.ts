@@ -1,8 +1,8 @@
-import prisma from "@/db/prisma";
+import prisma from "@/lib/prismaConfig";
 import { Provider } from "@prisma/client";
 import NextAuth from "next-auth";
-import Discord from "next-auth/providers/discord";
-import Github from "next-auth/providers/github";
+// import Discord from "next-auth/providers/discord";
+// import Github from "next-auth/providers/github";
 import Google from "next-auth/providers/google";
 
 declare module "next-auth" {
@@ -82,43 +82,43 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         );
       },
     }),
-    Github({
-      authorization: {
-        params: { scope: "read:user user:email" },
-      },
-      async profile(profile) {
-        const { email, login, avatar_url, id } = profile;
-        if (!email) {
-          throw new Error("Missing email");
-        }
+    // Github({
+    //   authorization: {
+    //     params: { scope: "read:user user:email" },
+    //   },
+    //   async profile(profile) {
+    //     const { email, login, avatar_url, id } = profile;
+    //     if (!email) {
+    //       throw new Error("Missing email");
+    //     }
 
-        return await handleSignIn(
-          email,
-          login,
-          avatar_url,
-          String(id),
-          "GITHUB",
-        );
-      },
-    }),
-    Discord({
-      async profile(profile) {
-        const { email, username, avatar, id } = profile;
-        if (!email) {
-          throw new Error("Missing email");
-        }
+    //     return await handleSignIn(
+    //       email,
+    //       login,
+    //       avatar_url,
+    //       String(id),
+    //       "GITHUB",
+    //     );
+    //   },
+    // }),
+    // Discord({
+    //   async profile(profile) {
+    //     const { email, username, avatar, id } = profile;
+    //     if (!email) {
+    //       throw new Error("Missing email");
+    //     }
 
-        return await handleSignIn(
-          email,
-          username,
-          `https://cdn.discordapp.com/avatars/${id}/${avatar}`,
-          String(id),
-          "DISCORD",
-          profile.refreshToken,
-          profile.accessToken,
-        );
-      },
-    }),
+    //     return await handleSignIn(
+    //       email,
+    //       username,
+    //       `https://cdn.discordapp.com/avatars/${id}/${avatar}`,
+    //       String(id),
+    //       "DISCORD",
+    //       profile.refreshToken,
+    //       profile.accessToken,
+    //     );
+    //   },
+    // }),
   ],
   callbacks: {
     async jwt({ token, user }) {

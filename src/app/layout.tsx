@@ -1,7 +1,8 @@
-import { AppProviders } from '@/components/AppProviders'
-import { siteConfig } from '@/config/siteConfig'
-import React from 'react'
-import './globals.css'
+import { AppProviders } from '@/components/AppProviders';
+import { ThemeToggle } from '@/components/ThemeToggle';
+import { siteConfig } from '@/config/siteConfig';
+import React from 'react';
+import './globals.css';
 
 export const metadata = siteConfig;
 
@@ -10,6 +11,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="en" suppressHydrationWarning>
       <body className={`antialiased`} suppressHydrationWarning>
         <AppProviders>
+          <ThemeToggle position="absolute" />
           {children}
         </AppProviders>
       </body>
